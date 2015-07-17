@@ -1,2 +1,3 @@
 # XcodeBuildDemo
 xcodeBuild脚本打包
+包含正常项目打包和workspace类的项目打包
