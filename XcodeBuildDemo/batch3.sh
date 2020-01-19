@@ -11,14 +11,14 @@ do
 #每次打新包前清空
 rm -rf "$PWD/build/"
 #XcodeBuildDemo  需要打包的target  （当前demo值）
-xcodebuild -target XcodeBuildDemo clean
+xcrun xcodebuild -target XcodeBuildDemo clean | xcpretty
 ipafilename=`echo $line|cut -f1 -d':'`
 echo "ipafilename=$ipafilename"
 targetName=`echo ${ipafilename}`
 #修改工程plist值 CFrom需要改变的key值，后面跟需要修改的plist文件路径
 /usr/libexec/PlistBuddy -c "set :CFrom ${targetName}" $PWD/proChannel.plist
 #打包 XcodeBuildDemo 需要打包的target
-xcodebuild -target XcodeBuildDemo -configuration Distribution -sdk iphoneos build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+xcrun xcodebuild -target XcodeBuildDemo -configuration Distribution -sdk iphoneos build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty
 #生成ipa -v 打包生成的app路径
 xcrun -sdk iphoneos PackageApplication -v "$PWD/build/Release-iphoneos/XcodeBuildDemo.app" -o "$PWD/package/${targetName}.ipa"
 done
